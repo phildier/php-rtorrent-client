@@ -28,6 +28,6 @@ $methods = $c->system_listMethods();
 
 rTorrent XMLRPC references:
 
-https://code.google.com/p/pyroscope/wiki/RtXmlRpcReference
-https://code.google.com/p/gi-torrent/wiki/rTorrent_XMLRPC_reference
-http://scratchpad.wikia.com/wiki/RTorrentCommands
+- https://code.google.com/p/pyroscope/wiki/RtXmlRpcReference
+- https://code.google.com/p/gi-torrent/wiki/rTorrent_XMLRPC_reference
+- http://scratchpad.wikia.com/wiki/RTorrentCommands
