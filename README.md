@@ -12,7 +12,7 @@ Provides a simple, composer-installable XMLRPC client for communicating with the
 
 Installation through composer is recommended:
 
-`composer install phildier/php-rtorrent-client`
+`composer require phildier/php-rtorrent-client`
 
 #### Example usage
 
