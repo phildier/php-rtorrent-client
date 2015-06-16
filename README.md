@@ -23,3 +23,11 @@ $c->setRPCAddress("http://localhost:8180/RPC2");
 
 $methods = $c->system_listMethods();
 ```
+
+#### Resources
+
+rTorrent XMLRPC references:
+
+https://code.google.com/p/pyroscope/wiki/RtXmlRpcReference
+https://code.google.com/p/gi-torrent/wiki/rTorrent_XMLRPC_reference
+http://scratchpad.wikia.com/wiki/RTorrentCommands
