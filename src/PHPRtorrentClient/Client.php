@@ -13,13 +13,13 @@ class Client {
 			$params = array();
 		}
 
-		if(array_key_exists('guzzle_client',$params)) {
+		if(array_key_exists('guzzle_client',$params) && !empty($params['guzzle_client'])) {
 			$this->guzzle = $params['guzzle_client'];
 		} else {
 			$this->guzzle = new \GuzzleHttp\Client;
 		}
 
-		if(array_key_exists('rpc_address',$params)) {
+		if(array_key_exists('rpc_address',$params) && !empty($params['rpc_address'])) {
 			$this->setRPCAddress($params['rpc_address']);
 		} else {
 			$this->setRPCAddress("http://localhost/RPC2");
@@ -30,14 +30,8 @@ class Client {
 		$this->rpc_address = $uri;
 	}
 
-	public function __call($method,$params) {
-		$method = str_replace("_",".",$method);
-		return $this->request($method,$params);
-	}
-
-	private function request($method,$params) {
-		$xmlrpc_request = xmlrpc_encode_request($method,$params);
-		$response = $this->guzzle->post($this->rpc_address,array('body'=>$xmlrpc_request));
-		return xmlrpc_decode($response->getBody());
+	public function exec(Request $request) {
+		$response = $this->guzzle->post($this->rpc_address,array('body'=>(string)$request));
+		return new Response($request,$response);
 	}
 }

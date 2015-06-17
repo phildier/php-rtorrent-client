@@ -17,11 +17,17 @@ Installation through composer is recommended:
 #### Example usage
 
 ```
-$c = new PHPRtorrentClient\Client;
+<?php
 
-$c->setRPCAddress("http://localhost:8180/RPC2");
+require_once("../vendor/autoload.php");
 
-$methods = $c->system_listMethods();
+$client = new PHPRtorrentClient\Client(array('rpc_address'=>"http://localhost:8981/RPC2"));
+
+$request = new PHPRtorrentClient\Request("system.listMethods");
+
+$methods = $client->exec($request);
+
+print_r($methods->getAll());
 ```
 
 #### Resources

@@ -2,12 +2,10 @@
 
 require_once("../vendor/autoload.php");
 
-$c = new PHPRtorrentClient\Client(array('rpc_address'=>"http://localhost:8981/RPC2"));
+$client = new PHPRtorrentClient\Client(array('rpc_address'=>"http://localhost:8981/RPC2"));
 
-// replace the dots in rtorrent's xmlrpc methods with underscores
-$methods = $c->system_listMethods();
+$request = new PHPRtorrentClient\Request("system.listMethods");
 
-// OR, call this way:
-$methods = $c->{"system.listMethods"}();
+$methods = $client->exec($request);
 
-print_r($methods);
+print_r($methods->getAll());
