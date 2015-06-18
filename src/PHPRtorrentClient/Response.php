@@ -12,12 +12,13 @@ class Response {
 
 	public function __construct(Request $request, \GuzzleHttp\Psr7\Response $response) {
 		$this->request = $request;
-		$this->response = xmlrpc_decode($response->getBody());
+		$body = $this->fixBody($response->getBody());
+		$this->response = xmlrpc_decode($body);
 
-		if(isset($this->response->faultcode)) {
+		if(array_key_exists('faultCode',$this->response)) {
 			$this->is_error = true;
-			$this->error_code = $this->response->faultCode;
-			$this->error_string = $this->response->faultString;
+			$this->error_code = $this->response['faultCode'];
+			$this->error_string = $this->response['faultString'];
 		}
 	}
 
@@ -26,7 +27,7 @@ class Response {
 	}
 
 	public function getAll() {
-		if($this->is_error) {
+		if($this->isError()) {
 			return false;
 		}
 
@@ -44,7 +45,7 @@ class Response {
 	}
 
 	public function getMethod($method_name) {
-		if($this->is_error) {
+		if($this->isError()) {
 			return false;
 		}
 
@@ -53,7 +54,7 @@ class Response {
 	}
 
 	public function getLast() {
-		if($this->is_error) {
+		if($this->isError()) {
 			return false;
 		}
 
@@ -71,5 +72,11 @@ class Response {
 
 	public function getErrorString() {
 		return $this->error_string;
+	}
+
+	private function fixBody($str) {
+		// PHP's xmlrpc_decode doesn't support i8 integers, so convert them to string
+		$str = preg_replace('#<(/)?i8>#','<\\1string>',$str);
+		return $str;
 	}
 }
