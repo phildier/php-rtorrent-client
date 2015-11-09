@@ -1,5 +1,5 @@
 {
-    "name": "phildier/php-rtorrent-client",
+    "name": "blackout/php-rtorrent-client",
     "description": "PHP XMLRPC client for rTorrent",
     "require": {
         "guzzlehttp/guzzle": "6.0.1"
