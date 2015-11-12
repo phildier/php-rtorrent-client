@@ -4,20 +4,29 @@ namespace PHPRtorrentClient;
 
 class Request {
 
-	private $methods = null;
+	private $methods = [];
 
-	public function __construct($method=null,$params=null) {
-		if(!is_null($method)) {
+	public function __construct($method = '', $params = [])
+	{
+		if ($method)
+		{
 			$this->addMethod($method,$params);
 		}
 	}
 
-	public function addMethod($method, $params = null) {
-		$this->methods[] = new Method($method,$params);
+	public function addMethod($method, $params = [])
+	{
+		$this->methods[] = new Method($method, $params);
 	}
 
-	public function getMethods() {
+	public function getMethods()
+	{
 		return $this->methods;
+	}
+
+	public function getMethodCount()
+	{
+		return count($this->methods);
 	}
 
 	public function __toString() {
@@ -46,5 +55,10 @@ class Request {
 
 	private function encode_request($method,$params) {
 		return xmlrpc_encode_request($method,$params);
+	}
+	
+	public function isMultiRequest()
+	{
+		return ($this->getMethodCount() > 1 ? true : false);
 	}
 }
